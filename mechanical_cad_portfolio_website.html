@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio</title>
+
+<!-- Three.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#05070d;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 30px;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+.logo span{color:#00e6ff;}
+
+#themeBtn{
+  cursor:pointer;
+  padding:8px 12px;
+}
+
+/* HERO */
+.home{
+  display:flex;
+  padding:60px;
+  align-items:center;
+}
+
+.left{width:50%;}
+.left h1 span{color:#00e6ff;}
+
+.right{
+  width:50%;
+  height:400px;
+}
+
+canvas{border-radius:20px;}
+
+/* HOLOGRAM BG */
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at center,#00e6ff22,transparent 70%);
+  animation:move 10s infinite linear;
+  z-index:-1;
+}
+
+@keyframes move{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(30px)}
+  100%{transform:translateY(0)}
+}
+
+/* BUTTON */
+.btn{
+  padding:10px 20px;
+  background:#00e6ff;
+  border:none;
+  cursor:pointer;
+}
+
+.social a{
+  margin-right:10px;
+  color:#00e6ff;
+}
+
+/* SKILLS */
+.skills{padding:40px;}
+.cards{
+  display:flex;
+  gap:20px;
+}
+
+.card{
+  padding:20px;
+  background:#111;
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 20px #00e6ff;
+}
+
+/* PROJECT */
+.projects{padding:40px;}
+.project{
+  background:#111;
+  padding:20px;
+  margin:10px;
+  border-radius:10px;
+}
+
+/* CONTACT */
+.contact{
+  display:flex;
+  padding:40px;
+  justify-content:space-between;
+}
+
+form input, form button{
+  display:block;
+  margin:10px 0;
+  padding:10px;
+}
+
+/* FOOTER */
+footer{
+  background:#111;
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
+}
+
+.menu a{
+  color:white;
+  margin-left:10px;
+}
+
+.light{
+  background:white;
+  color:black;
+}
+
+.light header, .light footer{background:#ddd;}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚙ <span>SL</span></div>
+  <h2>My Portfolio</h2>
+  <button id="themeBtn">🌙</button>
+</header>
+
+<section class="home">
+  <div class="left">
+    <h1>Hello I am <span>SIDRAM LIMBOLE</span></h1>
+    <h3>Mechanical Design Engineer</h3>
+    <p>
+      Mechanical Design Engineer skilled in CAD modeling, 3D design,
+      drafting and automation systems. Expert in AutoCAD, SolidWorks,
+      CATIA and Creo. Passionate about precision engineering.
+    </p>
+
+    <button class="btn">Download Resume</button>
+
+    <div class="social">
+      <a href="#">WhatsApp</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Email</a>
+    </div>
+  </div>
+
+  <div class="right">
+    <div id="3d"></div>
+  </div>
+</section>
+
+<section class="skills">
+  <h2>Skills</h2>
+  <div class="cards">
+    <div class="card">AutoCAD - 2D Drafting</div>
+    <div class="card">SolidWorks - 3D Design</div>
+    <div class="card">CATIA - Surface Modeling</div>
+    <div class="card">Creo - Parametric Design</div>
+  </div>
+</section>
+
+<section class="projects">
+  <h2>Projects</h2>
+
+  <div class="project">
+    <h3>Valve Design</h3>
+    <p>3D model + 2D drafting + assembly drawing</p>
+    <button>Explore</button>
+  </div>
+
+  <div class="project">
+    <h3>Gearbox Assembly</h3>
+    <p>Full CAD modeling and detailing</p>
+    <button>Explore</button>
+  </div>
+
+</section>
+
+<section class="contact">
+  <form onsubmit="sendForm(event)">
+    <input required placeholder="First Name">
+    <input required placeholder="Last Name">
+    <input required type="email" placeholder="Email">
+    <input required placeholder="Mobile (+91)">
+    <input type="file" accept=".jpg,.pdf">
+    <button type="submit">Submit</button>
+  </form>
+
+  <div>
+    <p>📞 +918956338134</p>
+    <p>📧 limbolesidram818@gmail.com</p>
+  </div>
+</section>
+
+<footer>
+  <p>© Created by SidramLimbole</p>
+  <div class="menu">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Skills</a>
+    <a href="#">Projects</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+
+// THEME
+ document.getElementById("themeBtn").onclick=()=>{
+  document.body.classList.toggle("light");
+ }
+
+// CONTACT FORM
+function sendForm(e){
+ e.preventDefault();
+ alert("Form submitted successfully!");
+}
+
+// THREE JS 3D MODEL
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(300,300);
+document.getElementById("3d").appendChild(renderer.domElement);
+
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshBasicMaterial({ color: 0x00e6ff, wireframe:true });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.z = 3;
+
+function animate(){
+ requestAnimationFrame(animate);
+ cube.rotation.x += 0.01;
+ cube.rotation.y += 0.01;
+ renderer.render(scene, camera);
+}
+
+animate();
+
+</script>
+
+</body>
+</html>
